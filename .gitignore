@@ -1,0 +1,22 @@
+# Binaries
+aip
+aip.exe
+aipd
+aipd.exe
+*.test
+*.out
+
+# OS files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# Environment
+.env
+.env.local

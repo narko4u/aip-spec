@@ -1,0 +1,54 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://aip.empirelabs.com.au/schemas/contract-template-v1.json",
+  "title": "AIP Contract Template",
+  "description": "Re-usable contract terms referenced by ACI Capability Manifests.",
+  "type": "object",
+  "required": ["template_id", "aip_version", "action_id"],
+  "properties": {
+    "template_id": { "type": "string" },
+    "aip_version": { "type": "string" },
+    "action_id": { "type": "string" },
+    "display_name": { "type": "string" },
+    "pricing": {
+      "type": "object",
+      "properties": {
+        "model": { "type": "string", "enum": ["flat", "per_invocation", "subscription", "revenue_share"] },
+        "amount": { "type": "integer" },
+        "currency": { "type": "string" },
+        "interval": { "type": "string" },
+        "revenue_share": { "type": "number", "minimum": 0, "maximum": 100 }
+      }
+    },
+    "sla": {
+      "type": "object",
+      "properties": {
+        "max_latency_ms": { "type": "integer" },
+        "min_uptime_percent": { "type": "number" },
+        "max_retries": { "type": "integer" },
+        "rate_limit": {
+          "type": "object",
+          "properties": {
+            "requests": { "type": "integer" },
+            "per_seconds": { "type": "integer" }
+          }
+        }
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "properties": {
+        "types": { "type": "array", "items": { "type": "string" } },
+        "retention_days": { "type": "integer" }
+      }
+    },
+    "dispute": {
+      "type": "object",
+      "properties": {
+        "arbiter": { "type": "string" },
+        "resolution_timeout_seconds": { "type": "integer" }
+      }
+    },
+    "terms": { "type": "string" }
+  }
+}

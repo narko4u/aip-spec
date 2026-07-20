@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://aip.empirelabs.com.au/schemas/evidence-receipt-v1.json",
+  "title": "AIP Evidence Receipt",
+  "description": "Signed attestation that an action was executed under a specific contract.",
+  "type": "object",
+  "required": ["receipt_id", "aip_version", "contract_id", "action_id", "input_hash", "output_hash", "provider", "consumer", "timestamp"],
+  "properties": {
+    "receipt_id": { "type": "string" },
+    "aip_version": { "type": "string" },
+    "contract_id": { "type": "string" },
+    "action_id": { "type": "string" },
+    "input_hash": { "type": "string", "description": "SHA-256 hex of action input" },
+    "output_hash": { "type": "string", "description": "SHA-256 hex of action output" },
+    "provider": { "type": "string" },
+    "consumer": { "type": "string" },
+    "timestamp": { "type": "string", "format": "date-time" },
+    "duration_ms": { "type": "integer" },
+    "signature": { "type": "string", "description": "Ed25519 signature over receipt content" }
+  }
+}

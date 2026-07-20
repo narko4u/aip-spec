@@ -1,0 +1,306 @@
+# Agent Interaction Protocol (AIP)
+
+**Status:** Draft v0.1 — Specification Outline  
+**Author:** Empire Labs Pty Ltd  
+**License:** CC BY 4.0 (spec) / MIT (schemas, examples)  
+**Repository:** github.com/narko4u/aip-spec *(planned)*  
+**Layer:** Above ACI, below WitnessOS
+
+---
+
+## What is AIP?
+
+ACI tells an agent *who you are and what you offer*.  
+AIP tells an agent *how to actually interact with you*.
+
+AIP is the interaction layer for autonomous agent-to-agent and agent-to-organization commerce. It defines:
+
+- **Action Schemas** — typed input/output contracts for every capability
+- **Contract Templates** — machine-readable terms (price, SLA, retry, dispute)
+- **Negotiation Flows** — offer/counter/accept/reject between autonomous parties
+- **Execution Bindings** — how the action actually happens (REST, MCP, gRPC, WebSocket)
+- **Settlement Hooks** — payment, receipt, evidence generation via WitnessOS
+
+### Relationship to ACI
+
+```
+┌────────────────────────────────────────────────┐
+│                    ACI                          │
+│   Discovery · Identity · Capabilities · Trust  │
+│   (who are you, what do you offer, can I trust │
+│    you, where are your agents)                  │
+└────────────────────┬───────────────────────────┘
+                     │ references
+┌────────────────────▼───────────────────────────┐
+│                    AIP                          │
+│   Interaction · Negotiation · Execution         │
+│   (what exactly can you do for me, on what     │
+│    terms, how do we transact)                   │
+└────────────────────┬───────────────────────────┘
+                     │ produces evidence
+┌────────────────────▼───────────────────────────┐
+│                 WitnessOS                       │
+│   Governance · Enforcement · Evidence           │
+│   (did it happen correctly, prove it, remediate │
+│    if not)                                      │
+└────────────────────────────────────────────────┘
+```
+
+---
+
+## Core Concepts
+
+### 1. Action
+
+The atomic unit of interaction. An Action is a typed, machine-readable capability declaration:
+
+```json
+{
+  "action_id": "aci.evaluate-policy",
+  "version": "1.0.0",
+  "description": "Evaluate an action against governance policy",
+  "input_schema": { ... },
+  "output_schema": { ... },
+  "binding": {
+    "type": "http",
+    "method": "POST",
+    "url": "https://witnessos.empirelabs.com.au/api/evaluate",
+    "headers": { "Authorization": "Bearer {api_key}" }
+  },
+  "pricing": {
+    "model": "per-call",
+    "price_per_call": "0.001",
+    "currency": "USD"
+  },
+  "sla": {
+    "p99_latency_ms": 500,
+    "availability": "99.9",
+    "max_retries": 3
+  },
+  "evidence": {
+    "required": true,
+    "schema": { "$ref": "https://witnessos.empirelabs.com.au/schemas/evidence-receipt-v1.json" }
+  }
+}
+```
+
+### 2. Contract
+
+A binding agreement between two parties (agents or agent→organization):
+
+- **Static Contract** — predefined, non-negotiable terms (take-it-or-leave-it)
+- **Negotiated Contract** — result of offer/counter/accept/reject flow
+- **Smart Contract** — on-chain execution and settlement (future)
+
+Fields: parties, actions, pricing, SLA, evidence requirements, jurisdiction, dispute resolution.
+
+### 3. Negotiation
+
+The flow by which two autonomous parties converge on a Contract:
+
+```
+Agent A → Offer (proposed terms)
+Agent B → Counter (modified terms) or Accept or Reject
+Agent A → Accept or Counter or Reject
+...
+[Contract executed when both accept identical terms]
+```
+
+### 4. Execution
+
+The actual performance of an Action under a Contract:
+
+1. **Invocation** — caller sends request with contract_id
+2. **Validation** — receiver verifies contract is active, within SLA
+3. **Processing** — action is performed
+4. **Evidence** — WitnessOS generates SHA-256 receipt
+5. **Response** — result + evidence receipt returned
+6. **Settlement** — payment triggered (if applicable)
+
+### 5. Settlement
+
+How value moves between parties:
+
+- **Pre-pay** — deposit held, released on completion
+- **Post-pay** — invoice generated after execution
+- **Subscription** — recurring access
+- **Revenue Share** — percentage-based settlement
+- **Token/Programmable Payment** — crypto, stablecoins (future)
+
+---
+
+## Protocol Layers
+
+| Layer | What It Handles | Why Separate |
+|-------|----------------|--------------|
+| **L0: Transport** | HTTP, gRPC, MCP, WebSocket | Multiple underlying protocols |
+| **L1: Action** | Typed request/response schemas | The actual business logic |
+| **L2: Contract** | Terms, pricing, SLA | Binding agreement between parties |
+| **L3: Negotiation** | Offer/counter/accept/reject | Dynamic terms, not static |
+| **L4: Settlement** | Payment, receipts, dispute | Value transfer and closure |
+| **L5: Evidence** | WitnessOS receipts, audit trail | Governance and proof |
+
+---
+
+## Manifest Types (bound to ACI)
+
+AIP manifests are referenced FROM ACI manifests. An ACI Capability Manifest would reference AIP Action manifests:
+
+```json
+{
+  "capability_id": "empire.witnessos.policy-evaluation",
+  "name": "Policy Evaluation",
+  "description": "Evaluate agent actions against defined governance policies",
+  "aip_actions": [
+    "https://empirelabs.com.au/.well-known/aip/actions/evaluate-policy.json",
+    "https://empirelabs.com.au/.well-known/aip/actions/batch-evaluate.json"
+  ],
+  "aip_contracts": [
+    "https://empirelabs.com.au/.well-known/aip/contracts/standard.json",
+    "https://empirelabs.com.au/.well-known/aip/contracts/enterprise.json"
+  ]
+}
+```
+
+---
+
+## Reference Implementation (Go)
+
+**Location:** `/mnt/c/VaultSentinel/HermesGenesis/aip/`
+
+The AIP reference implementation is built in **Go** — a single binary with zero runtime dependencies.
+
+### Project Structure
+
+```
+aip/
+├── cmd/
+│   └── aip/main.go          # CLI tool
+├── internal/
+│   ├── crypto/sign.go       # Ed25519 signing/verification
+│   └── types/types.go       # Shared protocol types
+├── pkg/
+│   ├── action/schema.go     # Action Schema parsing and validation
+│   ├── contract/template.go # Contract templates and binding agreements
+│   ├── negotiation/nego.go  # Offer/counter-offer state machine
+│   ├── execution/execute.go # Transport dispatch + schema validation
+│   ├── settlement/settle.go # Transaction ledger and receipts
+│   └── evidence/receipt.go  # Signed evidence attestations
+├── schemas/
+│   ├── action-schema.json   # JSON Schema for Action definitions
+│   ├── contract-template.json
+│   └── evidence-receipt.json
+├── examples/
+│   └── full-flow/           # End-to-end example
+├── go.mod / go.sum
+└── README.md
+```
+
+### CLI Usage
+
+```sh
+# Install
+cd aip && go install ./cmd/aip/
+
+# Generate identity key pair
+aip keygen
+
+# Negotiate a contract from an action schema
+aip negotiate schema.json
+
+# Execute an action against a negotiated contract
+aip execute schema.json input.json
+
+# Settle a completed contract
+aip settle contract.json
+
+# Verify an evidence receipt
+aip verify receipt.json <public_key_hex>
+
+# Run full end-to-end demo
+aip demo
+```
+
+### Architecture
+
+```
+Agent (any language)
+  → subprocess/HTTP → aip binary (Go)
+    → validates action schema
+    → negotiates contract (state machine)
+    → dispatches execution via transport
+    → generates Ed25519-signed evidence receipt
+    → records settlement transaction
+```
+
+### Dependencies
+
+- **Zero external dependencies** — stdlib only (crypto/ed25519, net/http, encoding/json)
+- Single binary: `go build` produces a ~8MB static binary
+- Cross-compile: `GOOS=linux GOARCH=arm64 go build` for any platform
+
+## Roadmap
+
+| Phase | Contents | Target |
+|-------|----------|--------|
+| **v0.1** (current) | This outline + core concept definitions | Now |
+| **v0.2** | Action Schema spec + JSON Schema definitions | Q3 2026 |
+| **v0.3** | Contract Template spec + negotiation flow | Q3 2026 |
+| **v0.4** | Execution binding spec (HTTP, MCP, gRPC) | Q4 2026 |
+| **v0.5** | Settlement integration spec | Q4 2026 |
+| **v0.6** | Evidence/Receipt integration with WitnessOS | Q4 2026 |
+| **v0.7** | SDK support (Python, Go) | Q1 2027 |
+| **v1.0** | Stable spec + 3+ independent implementations | Q2 2027 |
+
+---
+
+## Canonical Use Case
+
+```mermaid
+sequenceDiagram
+    participant A as Agent A<br/>(ACI-enabled)
+    participant D as Discovery<br/>(ACI Manifests)
+    participant AIP as AIP Registry
+    participant B as Agent B<br/>(WitnessOS-Governed)
+    participant W as WitnessOS
+
+    A->>D: Discover Agent B's capabilities
+    D->>A: ACI manifests (agent, capability, identity)
+    A->>AIP: Fetch AIP action schemas & contract templates
+    AIP->>A: Action definitions + pricing + SLA
+    A->>B: Offer (action X, price Y, SLA Z)
+    B->>A: Counter (price Y+10%, SLA Z)
+    A->>B: Accept
+    Note over A,B: Contract active ✓
+    A->>B: Execute action (with contract_id)
+    B->>W: Evaluate action, generate receipt
+    W->>B: Receipt (SHA-256, policy result)
+    B->>A: Result + Evidence Receipt
+    A->>B: Payment/Settlement
+    Note over A,B: Interaction complete ✓
+```
+
+---
+
+## Design Principles
+
+1. **Stateless at Rest** — AIP manifests are static JSON. The protocol becomes stateful only during negotiation and execution.
+2. **AC-Compatible** — AIP references ACI identities and capabilities but doesn't require ACI to function (agents can advertise AIP actions independently).
+3. **WitnessOS-Native** — Evidence generation is assumed. Every execution produces a verifiable receipt.
+4. **Negotiable by Default** — Terms should be negotiable unless explicitly marked "fixed".
+5. **Failure-Aware** — Every action defines what happens on timeout, error, partial success, and dispute.
+6. **Versioned Strictly** — Breaking changes require major version bump. Agents MUST check version compatibility.
+
+---
+
+## Open Questions (to resolve before v0.2)
+
+- [ ] Should AIP have its own well-known URL (`.well-known/aip/`) or be embedded in ACI manifests?
+- [ ] Is negotiation synchronous (request/response within one session) or async (message queue)?
+- [ ] What's the dispute resolution mechanism? Arbitration by a third-party agent?
+- [ ] How does AIP handle identity verification beyond what ACI provides?
+- [ ] Should AIP define a lightweight payment token for micro-transactions between agents?
+
+---
+
+*This is a living document. Open issues and PRs on the repo to contribute.*
