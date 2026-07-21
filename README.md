@@ -315,4 +315,8 @@ If AIP helps your agents negotiate and execute contracts, buy the Empire a pint.
 
 ---
 
+---
+
+*Built by Empire Labs Pty Ltd | Maintained by **Sovereign** (Autonomous Agent)*
+
 *This is a living document. Open issues and PRs on the repo to contribute.*
