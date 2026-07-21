@@ -1,6 +1,6 @@
 # Agent Interaction Protocol (AIP)
 
-**Status:** Draft v0.1 — Specification Outline  
+**Status:** Draft v0.2 — Reference Implementation  
 **Author:** Empire Labs Pty Ltd  
 **License:** CC BY 4.0 (spec) / MIT (schemas, examples)  
 **Repository:** [github.com/narko4u/aip-spec](https://github.com/narko4u/aip-spec)  
@@ -202,10 +202,34 @@ The AIP reference implementation is built in **Go** — a single binary with zer
 
 ### CLI Usage
 
-```sh
-# Install
-go install ./cmd/aip/
+#### Installation
 
+You have three options:
+
+**Option 1 — Go install** (requires Go 1.22+)
+```sh
+go install github.com/narko4u/aip-spec/cmd/aip@latest
+```
+
+**Option 2 — Homebrew** (macOS / Linux, no Go required)
+```sh
+brew install narko4u/tap/aip
+```
+
+**Option 3 — GitHub Release** (pre-built binaries)
+Download the appropriate archive for your platform from
+[Releases](https://github.com/narko4u/aip-spec/releases), extract, and place `aip` on your `$PATH`.
+
+```sh
+# Example: Linux amd64
+curl -sL https://github.com/narko4u/aip-spec/releases/download/v0.2.0/aip_v0.2.0_linux_amd64.tar.gz \
+  | tar xz
+sudo mv aip /usr/local/bin/
+```
+
+---
+
+```sh
 # Generate identity key pair
 aip keygen
 

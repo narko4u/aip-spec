@@ -1,0 +1,72 @@
+# GoReleaser configuration — AIP (Agent Interaction Protocol)
+# Cross-platform builds: Linux + macOS, amd64 + arm64
+# Version: v0.2.0+
+
+version: 2
+
+project_name: aip
+
+before:
+  hooks:
+    - go mod tidy
+
+builds:
+  - main: ./cmd/aip
+    binary: aip
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+    ldflags:
+      - -s -w -X main.version={{.Version}} -X main.commit={{.Commit}} -X main.date={{.Date}}
+
+archives:
+  - formats: [tar.gz]
+    name_template: >-
+      {{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}
+    files:
+      - LICENSE
+      - README.md
+
+checksum:
+  name_template: "checksums.txt"
+  algorithm: sha256
+
+release:
+  github:
+    owner: narko4u
+    name: aip-spec
+  header: |
+    ## AIP v{{ .Version }}
+
+    Agent Interaction Protocol reference implementation.
+
+    ### Installation
+
+    **Go install:**
+    ```bash
+    go install github.com/narko4u/aip-spec/cmd/aip@v{{ .Version }}
+    ```
+
+    **Homebrew:**
+    ```bash
+    brew install narko4u/tap/aip
+    ```
+
+    **Download:** Grab the right archive for your platform below.
+  footer: |
+    **Full changelog:** https://github.com/narko4u/aip-spec/compare/{{ .PreviousTag }}...{{ .Tag }}
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"
+      - "^chore:"
+      - Merge pull request
+      - Merge branch
