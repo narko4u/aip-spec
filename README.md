@@ -284,7 +284,7 @@ sequenceDiagram
 
 ## Design Principles
 
-1. **Stateless at Rest** — AIP manifests are static JSON. The protocol becomes stateful only during negotiation and execution.
+1. **Stateless at Rest** — AIP manifests are static JSON (or [AJSON](https://github.com/narko4u/ajson) — a superset with comments, multi-line strings, and reusable references). The protocol becomes stateful only during negotiation and execution.
 2. **AC-Compatible** — AIP references ACI identities and capabilities but doesn't require ACI to function (agents can advertise AIP actions independently).
 3. **WitnessOS-Native** — Evidence generation is assumed. Every execution produces a verifiable receipt.
 4. **Negotiable by Default** — Terms should be negotiable unless explicitly marked "fixed".

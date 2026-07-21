@@ -1,0 +1,23 @@
+// AIP Contract Template (AJSON)
+// This is the recommended format for AIP contracts.
+// Compile with: ajson compile contract.ajson -o contract.json
+
+{
+  "aip_version": "1.0.0",
+  "contract_name": "Data Processing Agreement",
+  "timestamp": "2026-07-21T22:00:00Z",
+
+  "description": """A standard data processing contract between
+two autonomous agents. Terms are designed to be deterministic,
+verifiable, and compatible with WitnessOS governance.""",
+
+  // Reusable term templates
+  "&terms": {
+    "max_retries": 3,
+    "sla_seconds": 60,
+    "jurisdiction": "AU",
+    "evidence_required": true
+  },
+
+  "contract_terms": {"*terms": null}
+}

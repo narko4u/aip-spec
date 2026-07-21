@@ -1,0 +1,111 @@
+// AIP Action Schema — Authored in AJSON
+// Demonstrates comments, multi-line documentation, and reusable schema components.
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://aip.empirelabs.com.au/schemas/action-schema-v1.json",
+  "title": "AIP Action Schema",
+  "description": "Defines a single AIP Action: typed input/output contract for agent capability invocation.",
+
+  "type": "object",
+
+  // Fields required in every valid action declaration
+  "required": [
+    "aip_version",
+    "action_id",
+    "version",
+    "input_schema",
+    "output_schema",
+    "transport"
+  ],
+
+  "properties": {
+
+    // Protocol metadata — version must match the AIP implementation
+    "aip_version": {
+      "type": "string",
+      "description": "AIP protocol version (e.g. '0.1')"
+    },
+
+    "action_id": {
+      "type": "string",
+      "description": "Unique action identifier (e.g. 'policy.evaluate.v1')"
+    },
+
+    "version": {
+      "type": "string",
+      "description": "Schema version (e.g. '1.0.0')"
+    },
+
+    "display_name": {
+      "type": "string"
+    },
+
+    // Human-readable action description — supports long-form documentation
+    "description": {
+      "type": "string",
+      "description": "Human-readable description of what this action does"
+    },
+
+    // JSON Schema for input validation — can reference external schemas
+    "input_schema": {
+      "type": "object",
+      "description": "JSON Schema describing valid inputs"
+    },
+
+    // JSON Schema for output validation
+    "output_schema": {
+      "type": "object",
+      "description": "JSON Schema describing valid outputs"
+    },
+
+    // Transport configuration — how agents reach this action
+    "transport": {
+      "type": "object",
+      "required": ["protocol", "endpoint"],
+      "properties": {
+        "protocol": {
+          "type": "string",
+          "enum": ["https", "mcp", "grpc", "websocket"]
+        },
+        "endpoint": {
+          "type": "string",
+          "format": "uri"
+        },
+        "method": {
+          "type": "string"
+        },
+        "headers": {
+          "type": "object"
+        }
+      }
+    },
+
+    // Execution constraints
+    "timeout_seconds": {
+      "type": "integer",
+      "minimum": 1
+    },
+
+    "idempotent": {
+      "type": "boolean"
+    },
+
+    // Optional cost model — drives negotiation in AIP contract flow
+    "cost": {
+      "type": "object",
+      "properties": {
+        "credits_per_execution": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "currency": {
+          "type": "string"
+        }
+      }
+    }
+  }
+
+  // Note: To compile this to canonical JSON for agent consumption:
+  //   pip install ajson
+  //   ajson compile action-schema.ajson -o action-schema.json
+}
