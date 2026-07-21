@@ -141,10 +141,11 @@ func validateOutput(schema *action.Schema, output json.RawMessage) error {
 
 func (e *Engine) errorResult(actionID, code, message string, start time.Time) *Result {
 	return &Result{
-		Success:   false,
-		ActionID:  actionID,
-		Error:     &action.ActionError{Code: code, Message: message, Retry: true},
+		Success:    false,
+		ActionID:   actionID,
+		Error:      &action.ActionError{Code: code, Message: message, Retry: true},
+		ReceiptID:  fmt.Sprintf("rec_%s_%d", actionID, start.UnixNano()),
 		DurationMs: time.Since(start).Milliseconds(),
-		Timestamp: start.UTC().Format(time.RFC3339),
+		Timestamp:  start.UTC().Format(time.RFC3339),
 	}
 }
