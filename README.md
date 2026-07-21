@@ -11,7 +11,8 @@
 ## What is AIP?
 
 ACI tells an agent *who you are and what you offer*.  
-AIP tells an agent *how to actually interact with you*.
+AIP tells an agent *how to actually interact with you*.  
+[AJSON](https://github.com/narko4u/ajson) writes the manifests for both.
 
 AIP is the interaction layer for autonomous agent-to-agent and agent-to-organization commerce. It defines:
 
