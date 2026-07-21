@@ -8,7 +8,7 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/empirelabs/aip/internal/crypto"
+	"github.com/narko4u/aip-spec/internal/crypto"
 )
 
 // signableBinding contains only the fields that are covered by signatures,

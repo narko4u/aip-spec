@@ -10,8 +10,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/empirelabs/aip/pkg/action"
-	"github.com/empirelabs/aip/pkg/contract"
+	"github.com/narko4u/aip-spec/pkg/action"
+	"github.com/narko4u/aip-spec/pkg/contract"
 )
 
 // Result captures the outcome of an action execution.

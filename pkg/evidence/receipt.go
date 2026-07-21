@@ -10,8 +10,8 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/empirelabs/aip/internal/crypto"
-	"github.com/empirelabs/aip/pkg/execution"
+	"github.com/narko4u/aip-spec/internal/crypto"
+	"github.com/narko4u/aip-spec/pkg/execution"
 )
 
 // Receipt is a signed attestation of an action execution.

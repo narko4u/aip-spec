@@ -9,8 +9,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/empirelabs/aip/internal/crypto"
-	"github.com/empirelabs/aip/pkg/contract"
+	"github.com/narko4u/aip-spec/internal/crypto"
+	"github.com/narko4u/aip-spec/pkg/contract"
 )
 
 // SessionState represents the current state in a negotiation session.
