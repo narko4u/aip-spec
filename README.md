@@ -3,7 +3,7 @@
 **Status:** Draft v0.1 — Specification Outline  
 **Author:** Empire Labs Pty Ltd  
 **License:** CC BY 4.0 (spec) / MIT (schemas, examples)  
-**Repository:** github.com/narko4u/aip-spec *(planned)*  
+**Repository:** [github.com/narko4u/aip-spec](https://github.com/narko4u/aip-spec)  
 **Layer:** Above ACI, below WitnessOS
 
 ---
@@ -166,14 +166,13 @@ AIP manifests are referenced FROM ACI manifests. An ACI Capability Manifest woul
 
 ## Reference Implementation (Go)
 
-**Location:** `/mnt/c/VaultSentinel/HermesGenesis/aip/`
+**Location:** Root of this repository
 
 The AIP reference implementation is built in **Go** — a single binary with zero runtime dependencies.
 
 ### Project Structure
 
 ```
-aip/
 ├── cmd/
 │   └── aip/main.go          # CLI tool
 ├── internal/
@@ -182,6 +181,7 @@ aip/
 ├── pkg/
 │   ├── action/schema.go     # Action Schema parsing and validation
 │   ├── contract/template.go # Contract templates and binding agreements
+│   ├── contract/binding.go  # Signed contract bindings
 │   ├── negotiation/nego.go  # Offer/counter-offer state machine
 │   ├── execution/execute.go # Transport dispatch + schema validation
 │   ├── settlement/settle.go # Transaction ledger and receipts
@@ -191,7 +191,10 @@ aip/
 │   ├── contract-template.json
 │   └── evidence-receipt.json
 ├── examples/
-│   └── full-flow/           # End-to-end example
+│   ├── action-schema.ajson  # AJSON example: action schema
+│   └── aip-contract.ajson   # AJSON example: contract template
+├── mcp-server/
+│   └── aip_mcp_server.py    # MCP server exposing AIP as tools
 ├── go.mod / go.sum
 └── README.md
 ```
@@ -200,7 +203,7 @@ aip/
 
 ```sh
 # Install
-cd aip && go install ./cmd/aip/
+go install ./cmd/aip/
 
 # Generate identity key pair
 aip keygen

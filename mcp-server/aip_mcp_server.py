@@ -2,6 +2,13 @@
 """
 AIP MCP Server — exposes AIP actions as MCP tools.
 
+⚠️ SECURITY NOTICE ⚠️
+This MCP server generates Ed25519 key pairs and returns private keys.
+- Use in stdio mode (default) only — do not expose over a network.
+- HTTP mode (`--http`) is for local development/testing only.
+- Never expose this server to the internet or untrusted networks.
+- Private keys are returned in tool responses — treat them as sensitive.
+
 Registers tools that wrap the `aip` binary:
   - aip_keygen        Generate Ed25519 key pair
   - aip_negotiate     Start/continue a negotiation
