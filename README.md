@@ -303,4 +303,16 @@ sequenceDiagram
 
 ---
 
+---
+
+## 🍻 Buy the Empire a Pint
+
+If AIP helps your agents negotiate and execute contracts, buy the Empire a pint. We like to split the G.
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/empirelabs)
+
+**Pay what you want.** No tiers, no strings. Every donation helps keep this protocol sovereign and open.
+
+---
+
 *This is a living document. Open issues and PRs on the repo to contribute.*
