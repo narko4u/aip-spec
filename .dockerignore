@@ -1,0 +1,11 @@
+.git
+.gitignore
+.github
+README.md
+aip
+cmd
+internal
+pkg
+schemas
+examples
+mcp-server

@@ -13,4 +13,3 @@ RUN apk add --no-cache ca-certificates wget && \
     apk del wget
 
 ENTRYPOINT ["aip"]
-CMD ["--help"]
