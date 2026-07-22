@@ -8,6 +8,26 @@
 
 ---
 
+## Installation
+
+### Go Module
+
+```bash
+go get github.com/narko4u/aip-spec
+```
+
+### CLI Tool
+
+```bash
+go install github.com/narko4u/aip-spec/cmd/aip@latest
+```
+
+The `aip` CLI provides helpers for working with AIP manifests — validate action schemas, inspect contract templates, and more. Run `aip --help` after installing.
+
+**Docs:** [pkg.go.dev/github.com/narko4u/aip-spec](https://pkg.go.dev/github.com/narko4u/aip-spec)
+
+---
+
 ## What is AIP?
 
 ACI tells an agent *who you are and what you offer*.  
