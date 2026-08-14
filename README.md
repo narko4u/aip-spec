@@ -6,6 +6,8 @@
 **Repository:** [github.com/narko4u/aip-spec](https://github.com/narko4u/aip-spec)  
 **Layer:** Above ACI, below WitnessOS
 
+> **📢 Community feedback window: open until 2026-09-15.** AIP is heading to v1.0 and we want your input before we freeze the core. Review the [spec](SPEC.md), try the [Go module](https://pkg.go.dev/github.com/narko4u/aip-spec), and tell us what breaks. Post via [GitHub Discussions](https://github.com/narko4u/aip-spec/discussions) or issues. Every substantive comment gets a reply.
+
 ---
 
 ## Installation
