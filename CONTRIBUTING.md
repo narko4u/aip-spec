@@ -10,9 +10,9 @@ This project and everyone participating in it is governed by the [Code of Conduc
 
 ### Reporting Issues
 
-- **Bug reports** — open an issue with steps to reproduce, expected behaviour, and actual behaviour
-- **Feature requests** — open an issue describing the use case and proposed behaviour
-- **Security issues** — do NOT open a public issue; email **contact@empirelabs.com.au**
+- **Bug reports** - open an issue with steps to reproduce, expected behaviour, and actual behaviour
+- **Feature requests** - open an issue describing the use case and proposed behaviour
+- **Security issues** - do NOT open a public issue; email **contact@empirelabs.com.au**
 
 ### Spec Contributions
 

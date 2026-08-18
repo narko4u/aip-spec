@@ -1,6 +1,6 @@
 # Agent Interaction Protocol (AIP)
 
-**Status:** Draft v0.2 — Reference Implementation  
+**Status:** Draft v0.2 - Reference Implementation  
 **Author:** Empire Labs Pty Ltd  
 **License:** CC BY 4.0 (spec) / MIT (schemas, examples)  
 **Repository:** [github.com/narko4u/aip-spec](https://github.com/narko4u/aip-spec)  
@@ -24,7 +24,7 @@ go get github.com/narko4u/aip-spec
 go install github.com/narko4u/aip-spec/cmd/aip@latest
 ```
 
-The `aip` CLI provides helpers for working with AIP manifests — validate action schemas, inspect contract templates, and more. Run `aip --help` after installing.
+The `aip` CLI provides helpers for working with AIP manifests - validate action schemas, inspect contract templates, and more. Run `aip --help` after installing.
 
 **Docs:** [pkg.go.dev/github.com/narko4u/aip-spec](https://pkg.go.dev/github.com/narko4u/aip-spec)
 
@@ -38,11 +38,11 @@ AIP tells an agent *how to actually interact with you*.
 
 AIP is the interaction layer for autonomous agent-to-agent and agent-to-organization commerce. It defines:
 
-- **Action Schemas** — typed input/output contracts for every capability
-- **Contract Templates** — machine-readable terms (price, SLA, retry, dispute)
-- **Negotiation Flows** — offer/counter/accept/reject between autonomous parties
-- **Execution Bindings** — how the action actually happens (REST, MCP, gRPC, WebSocket)
-- **Settlement Hooks** — payment, receipt, evidence generation via WitnessOS
+- **Action Schemas** - typed input/output contracts for every capability
+- **Contract Templates** - machine-readable terms (price, SLA, retry, dispute)
+- **Negotiation Flows** - offer/counter/accept/reject between autonomous parties
+- **Execution Bindings** - how the action actually happens (REST, MCP, gRPC, WebSocket)
+- **Settlement Hooks** - payment, receipt, evidence generation via WitnessOS
 
 ### Relationship to ACI
 
@@ -111,9 +111,9 @@ The atomic unit of interaction. An Action is a typed, machine-readable capabilit
 
 A binding agreement between two parties (agents or agent→organization):
 
-- **Static Contract** — predefined, non-negotiable terms (take-it-or-leave-it)
-- **Negotiated Contract** — result of offer/counter/accept/reject flow
-- **Smart Contract** — on-chain execution and settlement (future)
+- **Static Contract** - predefined, non-negotiable terms (take-it-or-leave-it)
+- **Negotiated Contract** - result of offer/counter/accept/reject flow
+- **Smart Contract** - on-chain execution and settlement (future)
 
 Fields: parties, actions, pricing, SLA, evidence requirements, jurisdiction, dispute resolution.
 
@@ -133,22 +133,22 @@ Agent A → Accept or Counter or Reject
 
 The actual performance of an Action under a Contract:
 
-1. **Invocation** — caller sends request with contract_id
-2. **Validation** — receiver verifies contract is active, within SLA
-3. **Processing** — action is performed
-4. **Evidence** — WitnessOS generates SHA-256 receipt
-5. **Response** — result + evidence receipt returned
-6. **Settlement** — payment triggered (if applicable)
+1. **Invocation** - caller sends request with contract_id
+2. **Validation** - receiver verifies contract is active, within SLA
+3. **Processing** - action is performed
+4. **Evidence** - WitnessOS generates SHA-256 receipt
+5. **Response** - result + evidence receipt returned
+6. **Settlement** - payment triggered (if applicable)
 
 ### 5. Settlement
 
 How value moves between parties:
 
-- **Pre-pay** — deposit held, released on completion
-- **Post-pay** — invoice generated after execution
-- **Subscription** — recurring access
-- **Revenue Share** — percentage-based settlement
-- **Token/Programmable Payment** — crypto, stablecoins (future)
+- **Pre-pay** - deposit held, released on completion
+- **Post-pay** - invoice generated after execution
+- **Subscription** - recurring access
+- **Revenue Share** - percentage-based settlement
+- **Token/Programmable Payment** - crypto, stablecoins (future)
 
 ---
 
@@ -191,7 +191,7 @@ AIP manifests are referenced FROM ACI manifests. An ACI Capability Manifest woul
 
 **Location:** Root of this repository
 
-The AIP reference implementation is built in **Go** — a single binary with zero runtime dependencies.
+The AIP reference implementation is built in **Go** - a single binary with zero runtime dependencies.
 
 ### Project Structure
 
@@ -228,17 +228,17 @@ The AIP reference implementation is built in **Go** — a single binary with zer
 
 You have three options:
 
-**Option 1 — Go install** (requires Go 1.22+)
+**Option 1 - Go install** (requires Go 1.22+)
 ```sh
 go install github.com/narko4u/aip-spec/cmd/aip@latest
 ```
 
-**Option 2 — Homebrew** (macOS / Linux, no Go required)
+**Option 2 - Homebrew** (macOS / Linux, no Go required)
 ```sh
 brew install narko4u/tap/aip
 ```
 
-**Option 3 — GitHub Release** (pre-built binaries)
+**Option 3 - GitHub Release** (pre-built binaries)
 Download the appropriate archive for your platform from
 [Releases](https://github.com/narko4u/aip-spec/releases), extract, and place `aip` on your `$PATH`.
 
@@ -285,7 +285,7 @@ Agent (any language)
 
 ### Dependencies
 
-- **Zero external dependencies** — stdlib only (crypto/ed25519, net/http, encoding/json)
+- **Zero external dependencies** - stdlib only (crypto/ed25519, net/http, encoding/json)
 - Single binary: `go build` produces a ~8MB static binary
 - Cross-compile: `GOOS=linux GOARCH=arm64 go build` for any platform
 
@@ -334,12 +334,12 @@ sequenceDiagram
 
 ## Design Principles
 
-1. **Stateless at Rest** — AIP manifests are static JSON (or [AJSON](https://github.com/narko4u/ajson) — a superset with comments, multi-line strings, and reusable references). The protocol becomes stateful only during negotiation and execution.
-2. **AC-Compatible** — AIP references ACI identities and capabilities but doesn't require ACI to function (agents can advertise AIP actions independently).
-3. **WitnessOS-Native** — Evidence generation is assumed. Every execution produces a verifiable receipt.
-4. **Negotiable by Default** — Terms should be negotiable unless explicitly marked "fixed".
-5. **Failure-Aware** — Every action defines what happens on timeout, error, partial success, and dispute.
-6. **Versioned Strictly** — Breaking changes require major version bump. Agents MUST check version compatibility.
+1. **Stateless at Rest** - AIP manifests are static JSON (or [AJSON](https://github.com/narko4u/ajson) - a superset with comments, multi-line strings, and reusable references). The protocol becomes stateful only during negotiation and execution.
+2. **AC-Compatible** - AIP references ACI identities and capabilities but doesn't require ACI to function (agents can advertise AIP actions independently).
+3. **WitnessOS-Native** - Evidence generation is assumed. Every execution produces a verifiable receipt.
+4. **Negotiable by Default** - Terms should be negotiable unless explicitly marked "fixed".
+5. **Failure-Aware** - Every action defines what happens on timeout, error, partial success, and dispute.
+6. **Versioned Strictly** - Breaking changes require major version bump. Agents MUST check version compatibility.
 
 ---
 
@@ -374,4 +374,4 @@ If AIP helps your agents negotiate and execute contracts, buy the Empire a pint.
 
 ---
 
-<sub>Part of the [WitnessOS launch family](https://github.com/narko4u/witnessos): [witnessos-alpha](https://github.com/narko4u/witnessos-alpha) · [witnessos-compliance](https://github.com/narko4u/witnessos-compliance) · [eu-ai-act-compliance-grade](https://github.com/narko4u/eu-ai-act-compliance-grade) · [witnessos-rogue-agent-audit](https://github.com/narko4u/witnessos-rogue-agent-audit) · [witnessos-agent-asset-registry](https://github.com/narko4u/witnessos-agent-asset-registry) · [witnessos-verifier](https://github.com/narko4u/witnessos-verifier) · [agent-interaction-specs](https://github.com/narko4u/agent-interaction-specs) · [aci-spec](https://github.com/narko4u/aci-spec) · [aip-spec](https://github.com/narko4u/aip-spec) · [ajson](https://github.com/narko4u/ajson) — [Empire Labs Pty Ltd](https://www.empirelabs.com.au)</sub>
+<sub>Part of the [WitnessOS launch family](https://github.com/narko4u/witnessos): [witnessos-alpha](https://github.com/narko4u/witnessos-alpha) · [witnessos-compliance](https://github.com/narko4u/witnessos-compliance) · [eu-ai-act-compliance-grade](https://github.com/narko4u/eu-ai-act-compliance-grade) · [witnessos-rogue-agent-audit](https://github.com/narko4u/witnessos-rogue-agent-audit) · [witnessos-agent-asset-registry](https://github.com/narko4u/witnessos-agent-asset-registry) · [witnessos-verifier](https://github.com/narko4u/witnessos-verifier) · [agent-interaction-specs](https://github.com/narko4u/agent-interaction-specs) · [aci-spec](https://github.com/narko4u/aci-spec) · [aip-spec](https://github.com/narko4u/aip-spec) · [ajson](https://github.com/narko4u/ajson) - [Empire Labs Pty Ltd](https://www.empirelabs.com.au)</sub>
