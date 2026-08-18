@@ -304,6 +304,22 @@ Agent (any language)
 
 ---
 
+## Verifying releases
+
+Each release ships a `SHA256SUMS` file listing the hashes of every release
+asset. To verify that a downloaded asset matches the published release:
+
+```sh
+sha256sum -c SHA256SUMS
+```
+
+The `SHA256SUMS` file is attached to the GitHub release (see the
+[Releases](https://github.com/narko4u/aip-spec/releases) page). Tagged
+releases are named per their version (for example `v0.1.0`), so release
+assets are always associated with an explicit release identifier.
+
+---
+
 ## Canonical Use Case
 
 ```mermaid
