@@ -221,6 +221,8 @@ The AIP reference implementation is built in **Go** - a single binary with zero 
 ├── mcp-server/
 │   └── aip_mcp_server.py    # MCP server exposing AIP as tools
 ├── go.mod / go.sum
+├── DESIGN.md                # Design: actors, actions, data flow
+├── CHANGELOG.md             # Release history
 └── README.md
 ```
 
