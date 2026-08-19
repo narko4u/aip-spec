@@ -36,6 +36,25 @@ checksum:
   name_template: "checksums.txt"
   algorithm: sha256
 
+sboms:
+  - artifacts: archive
+    cmd: syft
+    args: ["$artifact", "--output", "cyclonedx-json=$document", "--enrich", "all"]
+    documents:
+      - "{{ .ArtifactName }}.cdx.json"
+
+signs:
+  - cmd: cosign
+    signature: "${artifact}.sigstore.json"
+    env:
+      - COSIGN_EXPERIMENTAL=1
+    args:
+      - "sign-blob"
+      - "--bundle=${signature}"
+      - "${artifact}"
+      - "--yes"
+    artifacts: all
+
 release:
   github:
     owner: narko4u
