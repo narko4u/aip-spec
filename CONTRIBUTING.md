@@ -29,9 +29,13 @@ The AIP specification is at **draft v0.1**. We're actively iterating:
 3. Make your changes
 4. Run `go build ./...` to verify compilation
 5. Add tests for new functionality
-6. Run `go test ./...` to verify tests pass
+6. Run `go vet ./...` and `go test ./...` to verify tests pass
 7. Commit with clear messages
 8. Open a PR against `main`
+
+> **When tests run.** CI runs `go build`, `go vet` and `go test` on every
+> PR and every push to `main`. Major changes MUST add or update automated
+> tests in the same PR — see [TESTING.md](TESTING.md) for the full policy.
 
 ### Code Style
 

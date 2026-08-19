@@ -308,17 +308,70 @@ Agent (any language)
 
 ## Verifying releases
 
-Each release ships a `SHA256SUMS` file listing the hashes of every release
-asset. To verify that a downloaded asset matches the published release:
+Every release is built and published by GoReleaser
+([`.goreleaser.yaml`](.goreleaser.yaml) + the
+[`Release` workflow](.github/workflows/release.yml)). The following assets
+are attached to every GitHub release:
+
+- `aip_<version>_<os>_<arch>.tar.gz` — platform binaries
+  (linux/darwin × amd64/arm64)
+- `checksums.txt` — SHA-256 integrity checksums for every asset
+- `<asset>.cdx.json` — a CycloneDX software bill of materials per archive
+- `<asset>.sigstore.json` — a Sigstore keyless signature bundle per asset
+
+### 1. Verify integrity
+
+Download `checksums.txt` and verify every asset matches its published hash:
 
 ```sh
-sha256sum -c SHA256SUMS
+sha256sum -c checksums.txt
 ```
 
-The `SHA256SUMS` file is attached to the GitHub release (see the
-[Releases](https://github.com/narko4u/aip-spec/releases) page). Tagged
-releases are named per their version (for example `v0.1.0`), so release
-assets are always associated with an explicit release identifier.
+### 2. Verify authenticity
+
+Each asset is signed with Sigstore keyless signing using the GitHub
+Actions OIDC identity of the release workflow. Verify a signature with
+`cosign` (no signing key required):
+
+```sh
+cosign verify-blob \
+  --bundle aip_0.2.0_linux_amd64.tar.gz.sigstore.json \
+  --certificate-identity "https://github.com/narko4u/aip-spec/.github/workflows/release.yml@refs/tags/v*" \
+  --certificate-oidc-issuer "https://token.actions.githubusercontent.com" \
+  aip_0.2.0_linux_amd64.tar.gz
+```
+
+The command fails if the signature does not trace back to the release
+workflow of this repository.
+
+### 3. Verify the release author identity
+
+Releases are authored by the **release pipeline of `narko4u/aip-spec`**,
+maintained by **Empire Labs Pty Ltd** (contact@empirelabs.com.au). The
+Sigstore bundle binds each asset to:
+
+- **Workflow identity** — the `Release` workflow of
+  `github.com/narko4u/aip-spec` (the `--certificate-identity` match above)
+- **OIDC issuer** — `https://token.actions.githubusercontent.com`, i.e.
+  GitHub itself attests to the identity that signed the asset
+
+No human key is involved; the identity is machine-verifiable and cannot be
+spoofed by anyone who cannot trigger releases on this repository. Tags are
+created on `main` after CI passes, so a release always corresponds to a
+specific, tested commit.
+
+### 4. Software bill of materials
+
+Each archive ships a CycloneDX SBOM (`<asset>.cdx.json`) listing every
+dependency of that binary. Inspect it with any CycloneDX consumer or
+review it directly in the release assets.
+
+### 5. Threat model and vulnerability disclosure
+
+See [THREAT-ASSESSMENT.md](THREAT-ASSESSMENT.md) for the threat model and
+attack-surface analysis, and [VEX.md](VEX.md) for the vulnerability
+exploitability (VEX) statement. Security issues are handled per
+[SECURITY.md](SECURITY.md).
 
 ---
 
