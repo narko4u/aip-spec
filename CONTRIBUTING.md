@@ -63,3 +63,26 @@ go build -o aip ./cmd/aip/
 By contributing, you agree that your contributions will be licensed under the same licenses as this project:
 - **Specification (documentation, schemas)**: CC BY 4.0
 - **Code (Go, Python)**: MIT
+
+## Developer Certificate of Origin (DCO)
+
+Every contributor must certify that they are legally authorized to make their
+contributions under the project's licenses, in accordance with the
+[Developer Certificate of Origin](https://developercertificate.org/) (DCO).
+
+To certify, add a `Signed-off-by` trailer to each commit:
+
+```text
+Signed-off-by: Your Name <your@email.example>
+```
+
+The trailer is normally added automatically with:
+
+```bash
+git commit -s
+```
+
+The CI pipeline verifies that every commit in a pull request carries a
+`Signed-off-by` trailer (see the `dco` job in `.github/workflows/ci.yml`);
+pull requests without it will fail CI. If you are contributing on behalf of
+an employer or client, ensure you are authorized to do so under the DCO.
