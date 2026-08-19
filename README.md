@@ -1,5 +1,7 @@
 # Agent Interaction Protocol (AIP)
 
+[![OpenSSF Best Practices - Baseline 1](https://www.bestpractices.dev/projects/14143/badge)](https://www.bestpractices.dev/projects/14143)
+
 **Status:** Draft v0.2 - Reference Implementation  
 **Author:** Empire Labs Pty Ltd  
 **License:** CC BY 4.0 (spec) / MIT (schemas, examples)  
