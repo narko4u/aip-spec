@@ -1,6 +1,6 @@
 # Agent Interaction Protocol (AIP)
 
-[![OpenSSF Best Practices - Baseline 3](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fwww.bestpractices.dev%2Fprojects%2F14143.json&query=badge_percentage_baseline_3&label=OpenSSF%20Baseline%203)](https://www.bestpractices.dev/projects/14143)
+[![OpenSSF Best Practices - Baseline 3](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fwww.bestpractices.dev%2Fprojects%2F14143.json&query=badge_percentage_baseline_3&label=OpenSSF%20Baseline%203&suffix=%25&color=success)](https://www.bestpractices.dev/projects/14143)
 
 **Status:** Draft v0.2 - Reference Implementation  
 **Author:** Empire Labs Pty Ltd  
