@@ -1,3 +1,7 @@
+// AIP (Agent Interaction Protocol)
+// Copyright (c) 2026 Empire Labs Pty Ltd
+// SPDX-License-Identifier: MIT
+
 // Package negotiation implements the AIP negotiation state machine.
 // It manages offer/counter-offer flows between agents to form binding contracts.
 package negotiation

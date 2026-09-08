@@ -1,3 +1,7 @@
+// AIP (Agent Interaction Protocol)
+// Copyright (c) 2026 Empire Labs Pty Ltd
+// SPDX-License-Identifier: MIT
+
 // Package execution defines the action invocation lifecycle:
 // validate input → invoke transport → validate output → record evidence.
 package execution

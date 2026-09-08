@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+# AIP (Agent Interaction Protocol)
+# Copyright (c) 2026 Empire Labs Pty Ltd
+# SPDX-License-Identifier: MIT
+
 """
 AIP MCP Server — exposes AIP actions as MCP tools.
 
