@@ -1,3 +1,7 @@
+// AIP (Agent Interaction Protocol)
+// Copyright (c) 2026 Empire Labs Pty Ltd
+// SPDX-License-Identifier: MIT
+
 // Package evidence defines evidence receipts — signed attestations
 // that an action was executed under a specific contract. Evidence receipts
 // are designed to be verifiable by WitnessOS.

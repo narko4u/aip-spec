@@ -1,3 +1,7 @@
+// AIP (Agent Interaction Protocol)
+// Copyright (c) 2026 Empire Labs Pty Ltd
+// SPDX-License-Identifier: MIT
+
 // Package action defines Action Schemas — typed input/output contracts
 // that agents use to invoke capabilities discovered through ACI manifests.
 package action

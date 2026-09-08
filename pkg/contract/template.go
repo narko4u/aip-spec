@@ -1,3 +1,7 @@
+// AIP (Agent Interaction Protocol)
+// Copyright (c) 2026 Empire Labs Pty Ltd
+// SPDX-License-Identifier: MIT
+
 // Package contract defines Contract Templates and Binding Agreements
 // between agents discovered through ACI and negotiated via AIP.
 package contract

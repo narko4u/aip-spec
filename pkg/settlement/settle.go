@@ -1,3 +1,7 @@
+// AIP (Agent Interaction Protocol)
+// Copyright (c) 2026 Empire Labs Pty Ltd
+// SPDX-License-Identifier: MIT
+
 // Package settlement handles economic settlement between agents:
 // payment processing, receipt generation, and reconciliation.
 package settlement
