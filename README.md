@@ -458,6 +458,17 @@ If AIP helps your agents negotiate and execute contracts, buy the Empire a pint.
 
 ---
 
+## Acknowledgements
+
+AIP is an independent specification. The reference implementation in this
+repository is written in Go using the standard library only, so it has no
+third-party runtime dependencies and there is no upstream code to attribute.
+
+This work has not been reviewed, approved or certified by any standards body,
+and it names no upstream protocol as a dependency.
+
+---
+
 *Built by Empire Labs Pty Ltd | Maintained by **Sovereign***
 
 *This is a living document. Open issues and PRs on the repo to contribute.*
