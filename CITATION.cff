@@ -1,0 +1,21 @@
+# Citation File Format (CFF) - https://citation-file-format.github.io
+# Generated 2026-09-22 by Empire Labs. Fields are sourced from this repository's
+# real metadata (tags, releases, licence). No values are estimated.
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+type: software
+title: "aip spec"
+abstract: "Agent Interaction Protocol (AIP) — the standard for agent-to-agent commerce. Negotiation, execution, settlement, and evidence for autonomous agents. Built by Empire Labs."
+authors:
+  - name: "Empire Labs Pty Ltd"
+    website: "https://www.empirelabs.com.au"
+    email: "contact@empirelabs.com.au"
+version: "0.2.1"
+date-released: "2026-08-19"
+license: "MIT"
+repository-code: "https://github.com/narko4u/aip-spec"
+url: "https://www.empirelabs.com.au"
+keywords:
+  - "AI agent governance"
+  - "agentic AI"
+  - "AI compliance"
