@@ -2,7 +2,7 @@
 # https://github.com/narko4u/aip-spec
 # ghcr.io/narko4u/aip-spec
 
-FROM alpine:3.20
+FROM alpine:3.24
 
 ARG VERSION=0.2.0
 ARG TARGETARCH=amd64
