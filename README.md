@@ -469,7 +469,7 @@ and it names no upstream protocol as a dependency.
 
 ---
 
-*Built by Empire Labs Pty Ltd | Maintained by **Edward Wade***
+*Built and maintained by Security Division, Empire Labs Pty Ltd*
 
 *This is a living document. Open issues and PRs on the repo to contribute.*
 
