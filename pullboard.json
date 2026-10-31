@@ -27,6 +27,7 @@
       "owns": [
         "README.md",
         "CHANGELOG.md",
+        "TESTING.md",
         "docs"
       ]
     }
