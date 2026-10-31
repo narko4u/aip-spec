@@ -76,3 +76,33 @@ func TestCanonicalBytesExcludesSignatures(t *testing.T) {
 		}
 	}
 }
+
+func TestCanonicalBytesTable(t *testing.T) {
+	cases := []struct {
+		name   string
+		mutate func(*Binding)
+		same   bool
+	}{
+		{name: "stable-name", mutate: func(b *Binding) {}, same: true},
+		{name: "changed-amount", mutate: func(b *Binding) { b.Pricing.Amount = 9900 }, same: false},
+	}
+
+	base, err := aBinding().CanonicalBytes()
+	if err != nil {
+		t.Fatalf("CanonicalBytes: %v", err)
+	}
+
+	for _, c := range cases {
+		t.Run(c.name, func(t *testing.T) {
+			other := aBinding()
+			c.mutate(other)
+			got, err := other.CanonicalBytes()
+			if err != nil {
+				t.Fatalf("CanonicalBytes: %v", err)
+			}
+			if same := bytes.Equal(base, got); same != c.same {
+				t.Fatalf("%s: bytes equal = %v, want %v", c.name, same, c.same)
+			}
+		})
+	}
+}
