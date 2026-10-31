@@ -7,6 +7,9 @@ policy portion during review.
 
 ## When tests run
 
+The command that runs the suite is `go test ./...`. Build and vet are separate
+checks and are not part of the suite.
+
 1. **Every pull request** — the `CI` workflow (see
    [`.github/workflows/ci.yml`](.github/workflows/ci.yml)) runs
    `go build ./...`, `go vet ./...` and `go test ./...` on every push to a
