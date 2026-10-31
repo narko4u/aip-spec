@@ -37,6 +37,11 @@ including action-schema parsing, contract negotiation flows, and evidence
 handling. `go test ./...` runs the full suite; `go vet ./...` runs static
 analysis; `go build ./...` verifies every package compiles.
 
+A package with no `*_test.go` file is reported by `go test ./...` as
+`[no test files]`. That is not a pass. The package is uncovered, the line is
+there to make the gap visible, and adding the first test for a package is
+ordinary work rather than an exception.
+
 ## Policy for major changes
 
 > **Any significant change MUST add or update automated tests in the same
